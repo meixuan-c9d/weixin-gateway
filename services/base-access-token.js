@@ -1,8 +1,8 @@
 const debug = require('../configs/debug')
 const fetch = require('node-fetch')
-const promisifyAsync = require('../utils/promisify-async')
+const wrap = require('../utils/wrap')
 
-module.exports = promisifyAsync(async (request, response, next) => {
+module.exports = wrap(async (request, response, next) => {
   const sessionId = request.session.id
   const responseFetch = await fetch(
     `${process.env.SERVICE_ADDRESS_BASE_ACCESS_TOKEN}:` + 

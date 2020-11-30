@@ -10,8 +10,8 @@ module.exports = wrap(async (request, response, next) => {
   //   `/base-access-token`
   // )
   const responseFetchBaseAccessToken = await fetch(
-    `${process.env.SERVICE_ADDRESS_JSAPI_TICKET}:` + 
-    `${process.env.SERVICE_PORT_JSAPI_TICKET}/` +
+    `${process.env.SERVICE_ADDRESS_BASE_ACCESS_TOKEN}:` + 
+    `${process.env.SERVICE_PORT_BASE_ACCESS_TOKEN}/` +
     `${sessionId}`
   )
   const { baseAccessToken } = await responseFetchBaseAccessToken.json()

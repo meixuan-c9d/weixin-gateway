@@ -5,6 +5,10 @@ const wrap = require('../utils/wrap')
 module.exports = wrap(async (request, response, next) => {
   const sessionId = request.session.id
 
+  debug.log(`
+  sessionId used by gateway ${sessionId}
+  `)
+
   // get jsapi ticket
 
   const responseFetchBaseAccessToken = await fetch(

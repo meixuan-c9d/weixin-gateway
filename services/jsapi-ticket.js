@@ -5,10 +5,6 @@ const wrap = require('../utils/wrap')
 module.exports = wrap(async (request, response, next) => {
   const sessionId = request.session.id
 
-  // const responseFetchBaseAccessToken = await fetch(
-  //   `${process.env.LISTEN_ADDRESS}:${process.env.LISTEN_PORT}` +
-  //   `/base-access-token`
-  // )
   const responseFetchBaseAccessToken = await fetch(
     `${process.env.SERVICE_ADDRESS_BASE_ACCESS_TOKEN}:` + 
     `${process.env.SERVICE_PORT_BASE_ACCESS_TOKEN}/` +

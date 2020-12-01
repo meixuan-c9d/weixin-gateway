@@ -1,46 +1,21 @@
 const debug = require('../configs/debug')
-const fetch = require('node-fetch')
 const wrap = require('../utils/wrap')
+const getBaseAccessToken = require('../libs/get-base-access-token')
+const getJSAPITicket = require('../libs/get-jsapi-ticket')
+const getJSSDKConfig = require('../libs/get-jssdk-config')
 
 module.exports = wrap(async (request, response, next) => {
   const sessionId = request.session.id
-
   debug.log(`
-  sessionId used by gateway ${sessionId}
+sessionId used by gateway ${sessionId}
   `)
-
-  // get jsapi ticket
-  const responseFetchBaseAccessToken = await fetch(
-    `${process.env.SERVICE_ADDRESS_BASE_ACCESS_TOKEN}:` + 
-    `${process.env.SERVICE_PORT_BASE_ACCESS_TOKEN}/` +
-    `${sessionId}`
-  )
-  const { baseAccessToken } = await responseFetchBaseAccessToken.json()
-  
-  const responseFetchJSAPITicket = await fetch(
-    `${process.env.SERVICE_ADDRESS_JSAPI_TICKET}:` + 
-    `${process.env.SERVICE_PORT_JSAPI_TICKET}/` +
-    `${sessionId}/${baseAccessToken}`
-  )
-  const responseConcatJSAPITicket = await responseFetchJSAPITicket.json()
-  debug.log(`
-    service response of jsapi ticket %O
-  `, responseConcatJSAPITicket)
-
-  const jsapiTicket = responseConcatJSAPITicket.jsapiTicket
+  const { baseAccessToken } = await getBaseAccessToken(sessionId)
+  const { jsapiTicket } = await getJSAPITicket(sessionId, baseAccessToken)
 
   // get jssdk config with jsapi ticket
-
-  const responseFetchJSSDKConfig = await fetch(
-    `${process.env.SERVICE_ADDRESS_JSSDK_CONFIG}:` + 
-    `${process.env.SERVICE_PORT_JSSDK_CONFIG}/` +
-    `${jsapiTicket}?url=${request.query.url}`
-  )
-  const responseConcatJSSDKConfig = await responseFetchJSSDKConfig.json()
+  const responseGetJSSDKConfig = await getJSSDKConfig(jsapiTicket, request.query.url)
   debug.log(`
-    service response of jssdk config %O
-  `, responseConcatJSSDKConfig)
-
-  response.json(responseConcatJSSDKConfig)
-
+service response of jssdk config %O
+  `, responseGetJSSDKConfig)
+  response.json(responseGetJSSDKConfig)
 })

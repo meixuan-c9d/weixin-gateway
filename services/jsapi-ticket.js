@@ -1,25 +1,14 @@
 const debug = require('../configs/debug')
-const fetch = require('node-fetch')
 const wrap = require('../utils/wrap')
+const getBaseAccessToken = require('../libs/get-base-access-token')
+const getJSAPITicket = require('../libs/get-jsapi-ticket')
 
 module.exports = wrap(async (request, response, next) => {
   const sessionId = request.session.id
-
-  const responseFetchBaseAccessToken = await fetch(
-    `${process.env.SERVICE_ADDRESS_BASE_ACCESS_TOKEN}:` + 
-    `${process.env.SERVICE_PORT_BASE_ACCESS_TOKEN}/` +
-    `${sessionId}`
-  )
-  const { baseAccessToken } = await responseFetchBaseAccessToken.json()
-
-  const responseFetchJSAPITicket = await fetch(
-    `${process.env.SERVICE_ADDRESS_JSAPI_TICKET}:` + 
-    `${process.env.SERVICE_PORT_JSAPI_TICKET}/` +
-    `${sessionId}/${baseAccessToken}`
-  )
-  const responseConcatJSAPITicket = await responseFetchJSAPITicket.json()
+  const { baseAccessToken } = await getBaseAccessToken(sessionId)
+  const responseGetJSAPITicket = await getJSAPITicket(sessionId, baseAccessToken)
   debug.log(`
-    service response of jsapi ticket %O
-  `, responseConcatJSAPITicket)
-  response.json(responseConcatJSAPITicket)
+service response of jsapi ticket %O
+  `, responseGetJSAPITicket)
+  response.json(responseGetJSAPITicket)
 })

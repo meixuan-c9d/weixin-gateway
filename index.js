@@ -3,6 +3,8 @@ const debug = require('./configs/debug')
 const express = require('express')
 const app = express()
 
+app.disable('x-powered-by')
+
 const middlewareSession = require('./middlewares/session')
 app.use(middlewareSession)
 

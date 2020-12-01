@@ -5,9 +5,6 @@ const app = express()
 
 app.disable('x-powered-by')
 
-const compression = require('compression')
-app.use(compression())
-
 const middlewareSession = require('./middlewares/session')
 app.use(middlewareSession)
 

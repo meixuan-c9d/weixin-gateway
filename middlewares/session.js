@@ -9,7 +9,4 @@ module.exports = session({
   secret: 'liquidsnake',
   resave: false,
   saveUninitialized: true,
-  cookie: {
-    sameSite: 'none'
-  }
 })

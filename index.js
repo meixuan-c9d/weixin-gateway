@@ -5,14 +5,15 @@ const app = express()
 
 app.disable('x-powered-by')
 
-const middlewareSession = require('./middlewares/session')
-app.use(middlewareSession)
-
 const middlewareCors = require('cors')
+app.options('*', middlewareCors())
 app.use(middlewareCors({
   origin: 'http://www.c9-d.com',
   credentials: true
 }))
+
+const middlewareSession = require('./middlewares/session')
+app.use(middlewareSession)
 
 const routerBaseAccessToken = require('./routers/base-access-token')
 const routerJSAPITicket = require('./routers/jsapi-ticket')

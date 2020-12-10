@@ -9,7 +9,9 @@ const middlewareSession = require('./middlewares/session')
 app.use(middlewareSession)
 
 const middlewareCors = require('cors')
-app.use(middlewareCors())
+app.use(middlewareCors({
+  credentials: true
+}))
 
 const routerBaseAccessToken = require('./routers/base-access-token')
 const routerJSAPITicket = require('./routers/jsapi-ticket')

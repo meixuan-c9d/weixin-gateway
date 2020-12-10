@@ -9,7 +9,11 @@ const middlewareSession = require('./middlewares/session')
 app.use(middlewareSession)
 
 const middlewareCors = require('cors')
-app.use(middlewareCors())
+app.use(middlewareCors({
+  origin: ['http://www.c9-d.com', 'http://www.c9-d.com/'],
+  credentials: true,
+  preflightContinue: true
+}))
 
 const routerBaseAccessToken = require('./routers/base-access-token')
 const routerJSAPITicket = require('./routers/jsapi-ticket')

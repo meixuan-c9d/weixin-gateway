@@ -3,16 +3,16 @@ const debug = require('./configs/debug')
 const express = require('express')
 const app = express()
 
-const middlewareCors = require('cors')
+
 
 app.disable('x-powered-by')
 
 const middlewareSession = require('./middlewares/session')
 app.use(middlewareSession)
 
-
+const middlewareCors = require('cors')
 app.use(middlewareCors({
-  origin: true,
+  origin: 'http://www.c9-d.com',
   credentials: true,
 }))
 

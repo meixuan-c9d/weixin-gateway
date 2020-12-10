@@ -10,11 +10,9 @@ app.use(middlewareSession)
 
 const middlewareCors = require('cors')
 app.use(middlewareCors({
-  origin: function(origin, callback) {
-    console.log(origin)
-    callback(null, origin)
-  },
-  credentials: true
+  origin: 'http://www.c9-d.com',
+  credentials: true,
+  preflightContinue: true
 }))
 
 const routerBaseAccessToken = require('./routers/base-access-token')

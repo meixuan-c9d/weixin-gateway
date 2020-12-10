@@ -8,5 +8,6 @@ module.exports = session({
   }),
   secret: 'liquidsnake',
   resave: false,
-  saveUninitialized: true
+  saveUninitialized: true,
+  sameSite: 'none'
 })

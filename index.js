@@ -6,7 +6,6 @@ const app = express()
 app.disable('x-powered-by')
 
 const middlewareCors = require('cors')
-app.options('*', middlewareCors())
 app.use(middlewareCors({
   origin: 'http://www.c9-d.com',
   credentials: true

@@ -10,7 +10,7 @@ app.use(middlewareSession)
 
 const middlewareCors = require('cors')
 app.use(middlewareCors({
-  origin: true,
+  origin: 'http://www.c9-d.com',
   credentials: true
 }))
 
